@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+    stages {
+        stage('code-pulling') {
+            steps {
+                git 'https://github.com/VikasNehare/onlinebookstore.git'
+            }
+        }
+        stage('build-maven') {
+            steps {
+                sh 'mvn clean package' 
+            }
+        }
+        // stage('artifact to s3') {
+        //     steps {
+        //         withAWS(credentials: 'abhay-cred', region: 'eu-west-2') {
+        //         sh 'sudo apt update -y'
+        //         sh 'sudo apt install awscli -y'
+        //         sh 'aws s3 ls'
+        //         sh 'aws s3 mb s3://ab-bucket-jenkins --region eu-west-2'
+        //         sh 'sudo mv /var/lib/jenkins/workspace/s3-job/target/studentapp-2.2-SNAPSHOT.war /opt/student-${BUILD_ID}.war'
+        //         sh 'aws s3 cp /opt/student-${BUILD_ID}.war s3://ab-bucket-jenkins'
+        //         }
+        //     }        
+        // }
+    }
+}
